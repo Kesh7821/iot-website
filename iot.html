@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Internet of Things - BCA-501</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px;
+            color: white;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 40px;
+            font-size: 18px;
+            opacity: 0.7;
+        }
+
+        .slide-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide-subtitle {
+            font-size: 28px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .slide-content {
+            font-size: 22px;
+            line-height: 1.8;
+            max-width: 1200px;
+        }
+
+        .slide-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .slide-content li {
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .slide-content li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .box h3 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .emphasis {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .slide1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .slide2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .slide3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .slide4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .slide5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .slide6 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .slide7 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .slide8 { background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%); }
+        .slide9 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .slide10 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .slide11 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .slide12 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .slide13 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .slide14 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active slide1">
+            <div style="text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <h1 style="font-size: 72px; margin-bottom: 30px;">Internet of Things</h1>
+                <h2 style="font-size: 42px; opacity: 0.9;">BCA-501</h2>
+                <p style="font-size: 28px; margin-top: 50px; opacity: 0.8;">First Class: Introduction & Overview</p>
+                <p style="font-size: 24px; margin-top: 30px; opacity: 0.7;">Professor keshav</p>
+            </div>
+            <div class="slide-number">1</div>
+        </div>
+
+        <!-- Slide 2: Ice Breaker -->
+        <div class="slide slide2">
+            <h1 class="slide-title">Let's Start with a Question...</h1>
+            <div class="emphasis">
+                How many of you used a smartphone, fitness tracker, or smart device today?
+            </div>
+            <div class="slide-content" style="margin-top: 40px; font-size: 28px; text-align: center;">
+                <p>🎯 That's IoT in action!</p>
+            </div>
+            <div class="slide-number">2</div>
+        </div>
+
+        <!-- Slide 3: What is IoT -->
+        <div class="slide slide3">
+            <h1 class="slide-title">What is Internet of Things?</h1>
+            <div class="slide-content">
+                <div class="emphasis" style="font-size: 28px; margin-bottom: 40px;">
+                    "Connecting everyday physical objects to the internet, enabling them to send and receive data"
+                </div>
+                <ul>
+                    <li>Smart alarm adjusts based on your sleep cycle</li>
+                    <li>Coffee maker starts brewing automatically</li>
+                    <li>Car suggests best route avoiding traffic</li>
+                    <li>AC turns off automatically to save energy</li>
+                </ul>
+                <p style="margin-top: 40px; font-size: 26px; text-align: center;">
+                    <span class="highlight">75+ Billion IoT devices by 2025</span> (10 devices per person!)
+                </p>
+            </div>
+            <div class="slide-number">3</div>
+        </div>
+
+        <!-- Slide 4: Core Components -->
+        <div class="slide slide4">
+            <h1 class="slide-title">Core Components of IoT</h1>
+            <h2 class="slide-subtitle">The Building Blocks</h2>
+            <div class="two-column">
+                <div class="box">
+                    <h3>1. Sensors & Actuators</h3>
+                    <p>🔍 Sensors: Collect data (temperature, motion, camera)</p>
+                    <p style="margin-top: 10px;">⚡ Actuators: Perform actions (motors, lights, locks)</p>
+                </div>
+                <div class="box">
+                    <h3>2. Connectivity</h3>
+                    <p>📡 WiFi, Bluetooth, Zigbee, LoRa</p>
+                    <p style="margin-top: 10px;">🌐 Data travels from sensors to processors</p>
+                </div>
+                <div class="box">
+                    <h3>3. Data Processing</h3>
+                    <p>💻 Edge Computing: Local decisions</p>
+                    <p style="margin-top: 10px;">☁️ Cloud Computing: Remote servers</p>
+                </div>
+                <div class="box">
+                    <h3>4. User Interface</h3>
+                    <p>📱 Mobile apps, web dashboards</p>
+                    <p style="margin-top: 10px;">🎤 Voice assistants</p>
+                </div>
+            </div>
+            <div class="slide-number">4</div>
+        </div>
+
+        <!-- Slide 5: IoT Flow -->
+        <div class="slide slide5">
+            <h1 class="slide-title">How IoT Works: The Flow</h1>
+            <div class="emphasis" style="font-size: 36px;">
+                Sensors → Connectivity → Processing → Action
+            </div>
+            <div class="slide-content" style="margin-top: 40px;">
+                <div class="box">
+                    <h3>Example: Smart Health Monitoring</h3>
+                    <ul style="font-size: 20px;">
+                        <li>Smartwatch detects irregular heartbeat (Sensing)</li>
+                        <li>Data sent via Bluetooth to phone (Connectivity)</li>
+                        <li>Local app analyzes pattern (Edge Processing)</li>
+                        <li>Critical data sent to cloud for doctor review (Cloud Processing)</li>
+                        <li>Alert sent to user and doctor (Action & Interface)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="slide-number">5</div>
+        </div>
+
+        <!-- Slide 6: Key Characteristics -->
+        <div class="slide slide6">
+            <h1 class="slide-title">Key Characteristics of IoT</h1>
+            <div class="slide-content">
+                <ul>
+                    <li><span class="highlight">Connectivity</span> - Everything connected to internet/networks</li>
+                    <li><span class="highlight">Intelligence</span> - Smart decisions using AI and data analytics</li>
+                    <li><span class="highlight">Scalability</span> - Grow from 10 to 10 million devices</li>
+                    <li><span class="highlight">Automation</span> - Minimal human intervention</li>
+                    <li><span class="highlight">Heterogeneity</span> - Different devices working together</li>
+                    <li><span class="highlight">Real-time Processing</span> - Quick response times</li>
+                </ul>
+            </div>
+            <div class="slide-number">6</div>
+        </div>
+
+        <!-- Slide 7: Real Example -->
+        <div class="slide slide7">
+            <h1 class="slide-title">Real-World Example</h1>
+            <h2 class="slide-subtitle">Smart Agriculture System</h2>
+            <div class="slide-content">
+                <div class="box">
+                    <ul style="font-size: 20px;">
+                        <li>Soil moisture sensors detect dry soil (Sensing)</li>
+                        <li>Data sent via LoRa network to cloud (Connectivity)</li>
+                        <li>Cloud analyzes data + weather forecasts (Intelligence)</li>
+                        <li>System automatically triggers irrigation (Automation)</li>
+                        <li>Farmer monitors on mobile app (Interface)</li>
+                        <li>Scales from one field to hundreds (Scalability)</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 30px; font-size: 26px; text-align: center;">
+                    ✅ All 6 characteristics in action!
+                </p>
+            </div>
+            <div class="slide-number">7</div>
+        </div>
+
+        <!-- Slide 8: Course Structure -->
+        <div class="slide slide8">
+            <h1 class="slide-title">Course Structure: BCA-501</h1>
+            <div class="slide-content">
+                <div class="box" style="margin-bottom: 20px;">
+                    <h3>Unit 1: IoT Fundamentals & Protocols</h3>
+                    <p>Sensor nodes, Edge/Cloud computing, Arduino, Raspberry Pi<br>
+                    Protocols: MQTT, HTTP, CoAP, XMPP</p>
+                </div>
+                <div class="box" style="margin-bottom: 20px;">
+                    <h3>Unit 2: Communication Technologies</h3>
+                    <p>WiFi, Bluetooth, Zigbee, LoRa, NFC, 6LoWPAN<br>
+                    Point-to-point communication, Protocol architecture</p>
+                </div>
+                <div class="box">
+                    <h3>Unit 3: Advanced Topics</h3>
+                    <p>Cloud & Big Data, IoT Security, Case Studies<br>
+                    Industry 4.0, Smart Cities, Healthcare, Agriculture</p>
+                </div>
+            </div>
+            <div class="slide-number">8</div>
+        </div>
+
+        <!-- Slide 9: Unit 1 Details -->
+        <div class="slide slide9">
+            <h1 class="slide-title">Unit 1: Foundations</h1>
+            <h2 class="slide-subtitle">Learning the 'Language' of IoT</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>IoT components and characteristics</li>
+                    <li>Sensor nodes and edge computers</li>
+                    <li>Cloud and peripheral cloud architecture</li>
+                    <li>Single board computers (Arduino, Raspberry Pi)</li>
+                    <li>Open source hardware platforms</li>
+                    <li>IoT protocols: MQTT, UDP, HTTP, CoAP, XMPP</li>
+                    <li>MQTT brokers and publish-subscribe modes</li>
+                    <li>Gateway protocols</li>
+                </ul>
+            </div>
+            <div class="slide-number">9</div>
+        </div>
+
+        <!-- Slide 10: Unit 2 Details -->
+        <div class="slide slide10">
+            <h1 class="slide-title">Unit 2: Connectivity Layer</h1>
+            <h2 class="slide-subtitle">Wireless Communication Technologies</h2>
+            <div class="slide-content">
+                <ul>
+                    <li>Point-to-point communication technologies</li>
+                    <li>IoT communication patterns and protocol architecture</li>
+                    <li><span class="highlight">Wireless Technologies:</span></li>
+                    <li style="padding-left: 60px;">6LoWPAN, Zigbee, WiFi, Bluetooth, BLE</li>
+                    <li style="padding-left: 60px;">SIG, NFC, LoRa, LiFi, WiDi</li>
+                    <li>Selection criteria: When to use which technology?</li>
+                    <li>Range, power consumption, data rate trade-offs</li>
+                </ul>
+            </div>
+            <div class="slide-number">10</div>
+        </div>
+
+        <!-- Slide 11: Unit 3 Details -->
+        <div class="slide slide11">
+            <h1 class="slide-title">Unit 3: The Big Picture</h1>
+            <h2 class="slide-subtitle">Cloud, Security & Real-World Applications</h2>
+            <div class="two-column">
+                <div>
+                    <h3 style="margin-bottom: 15px;">Cloud & Analytics</h3>
+                    <ul style="font-size: 18px;">
+                        <li>Cloud computation evolution</li>
+                        <li>Commercial clouds</li>
+                        <li>Open source IoT platforms</li>
+                        <li>Big Data analytics & Hadoop</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 15px;">Security</h3>
+                    <ul style="font-size: 18px;">
+                        <li>Encryption protocols</li>
+                        <li>Lightweight cryptography</li>
+                        <li>Trust models & threat analysis</li>
+                        <li>Cloud security</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="box" style="margin-top: 20px;">
+                <h3>Case Studies & Standards</h3>
+                <p>Smart Cities, Healthcare, Agriculture, Smart Meters, M2M, Web of Things, Cellular IoT, Industrial IoT, Industry 4.0</p>
+            </div>
+            <div class="slide-number">11</div>
+        </div>
+
+        <!-- Slide 12: Applications -->
+        <div class="slide slide12">
+            <h1 class="slide-title">Real-World Impact</h1>
+            <div class="two-column">
+                <div class="box">
+                    <h3>🏙️ Smart Cities</h3>
+                    <p>• 30% reduction in traffic congestion<br>
+                    • 50-70% energy savings in street lights<br>
+                    • Intelligent waste management</p>
+                </div>
+                <div class="box">
+                    <h3>🏥 Healthcare</h3>
+                    <p>• Wearable health monitors<br>
+                    • Remote patient monitoring<br>
+                    • Smart pills for medication tracking</p>
+                </div>
+                <div class="box">
+                    <h3>🌾 Agriculture</h3>
+                    <p>• 30% increase in crop yields<br>
+                    • 40% water savings<br>
+                    • Livestock health monitoring</p>
+                </div>
+                <div class="box">
+                    <h3>🏭 Industry 4.0</h3>
+                    <p>• Predictive maintenance<br>
+                    • Real-time supply chain tracking<br>
+                    • Automated quality control</p>
+                </div>
+            </div>
+            <div class="slide-number">12</div>
+        </div>
+
+        <!-- Slide 13: Expectations -->
+        <div class="slide slide13">
+            <h1 class="slide-title">What to Expect & How to Succeed</h1>
+            <div class="two-column">
+                <div class="box">
+                    <h3>Course Components</h3>
+                    <p><strong>Theory:</strong> Architectures, protocols, standards</p>
+                    <p style="margin-top: 10px;"><strong>Practical:</strong> Hands-on labs with Arduino, Raspberry Pi, ESP32</p>
+                    <p style="margin-top: 10px;"><strong>Projects:</strong> Build real IoT solutions</p>
+                </div>
+                <div class="box">
+                    <h3>My Expectations</h3>
+                    <p>✓ Curiosity & exploration<br>
+                    ✓ Hands-on practice<br>
+                    ✓ Regular attendance<br>
+                    ✓ Project mindset</p>
+                </div>
+            </div>
+            <div class="box" style="margin-top: 30px;">
+                <h3>What You Need</h3>
+                <p>• Lab access to development boards<br>
+                • Recommended: ESP32/Arduino board (₹300-500) for home practice<br>
+                • Software: Arduino IDE, Node-RED (free)<br>
+                • Notebook for protocols and architectures</p>
+            </div>
+            <div class="slide-number">13</div>
+        </div>
+
+        <!-- Slide 14: Closing -->
+        <div class="slide slide14">
+            <h1 class="slide-title">Remember...</h1>
+            <div class="emphasis" style="font-size: 32px; margin-bottom: 40px;">
+                "IoT is not just about technology<br>
+                It's about solving real human problems"
+            </div>
+            <div class="slide-content">
+                <h3 style="margin-bottom: 20px;">For Next Class:</h3>
+                <ul>
+                    <li>Read about IoT sensor nodes and edge computing</li>
+                    <li>Think about ONE IoT project you'd like to build</li>
+                    <li>Assignment: Identify 3 problems around you that IoT can solve</li>
+                </ul>
+                <p style="margin-top: 50px; font-size: 32px; text-align: center;">
+                    🚀 Let's reshape the world together!
+                </p>
+            </div>
+            <div class="slide-number">14</div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+           
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        document.getElementById('prevBtn').disabled = true;
+    </script>
+</body>
+</html>
